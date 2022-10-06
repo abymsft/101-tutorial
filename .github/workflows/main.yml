@@ -49,3 +49,17 @@ jobs:
             push: true
             tags: ${{ steps.meta.outputs.tags }}
             labels: ${{ steps.meta.outputs.labels }}
+        - name: Azure Login
+          uses: Azure/login@v1.4.5
+          with:
+            # ClientId of the Azure Service principal created.
+            client-id: ${{ secrets.AZURE_CLIENT_ID }}
+            # TenantId of the Azure Service principal created.
+            tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+            # Azure subscriptionId
+            subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+            
+        - uses: azure/webapps-deploy@v2
+          with:
+            app-name: 'myapp0007'
+            images: 'ghcr.io/abymsft/101-tutorial:master'
